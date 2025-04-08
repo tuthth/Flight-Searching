@@ -1,0 +1,98 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/index.css" />
+    <link rel="stylesheet" href="~/js/setReurnDate.js" />
+    <link rel="stylesheet" href="~/js/returnDate.js" />
+    <link rel="stylesheet" href="~/js/checkLocation.js" />
+
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="~/js/setReurnDate.js"></script>
+    <script src="~/js/returnDate.js"></script>
+    <script src="~/js/checkLocation.js"></script>
+
+    <section>
+        <div class="wrapper bg-white">
+            <form method="POST">
+                <div class="form-group border-bottom d-flex align-items-center justify-content-between flex-wrap">
+                    <label class="option my-sm-0 my-2">
+                        <input type="radio" name="radio" value="One-way" id="one-way" onchange="disableReturnDate()">One Way (Một chiều)
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="option my-sm-0 my-2">
+                        <input type="radio" name="radio" value="Round-trip" id="round-trip" onchange="enableReturnDate()">Round Trip (Khứ hồi)
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="form-group d-sm-flex margin">
+                    <div class="d-flex align-items-center flex-fill me-sm-1 my-sm-0 my-4 border-bottom position-relative">
+                        <select required class="form-control" id="from" name="from" onchange="checkLocations()">
+                            <option value="">Điểm đi </option>
+                            @foreach (var location in Model.Locations)
+                            {
+                                <option value="@location">@location</option>
+                            }
+                        </select>
+                        <div class="label" id="fromLabel"></div>
+                        <span class="fas fa-dot-circle text-muted"></span>
+                    </div>
+                    <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
+                        <select required class="form-control" id="to" name="to" onchange="checkLocations()">
+                            <option value="">Điểm đến</option>
+                            @foreach (var location in Model.Locations)
+                            {
+                                <option value="@location">@location</option>
+                            }
+                        </select>
+                        <div class="label" id="toLabel"></div>
+                        <span class="fas fa-map-marker text-muted"></span>
+                    </div>
+                </div>
+                <div class="form-group d-sm-flex margin">
+                    <div class="d-flex align-items-center flex-fill me-sm1 my-sm-0 border-bottom position-relative">
+                        <input type="date" required placeholder="Depart Date" class="form-control" name="depart" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="depart-date" onchange="setReturnDateMin()">
+                        <div class="label" id="depart"></div>
+                       
+                    </div>
+                    <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
+                        <input type="date" required placeholder="Return Date" class="form-control" name="return" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="return-date" disabled>
+                        <div class="label" id="return"></div>
+                    </div>
+                </div>
+                <div class="form-group my-3">
+                    <div class="form-group">
+                        <label for="adults">Adults:</label>
+                        <input type="number" id="adults" name="adults" class="form-control" min="0" placeholder="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="children">Children:</label>
+                        <input type="number" id="childs" name="childs" class="form-control" min="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="infants">Infants:</label>
+                        <input type="number" id="infants" name="infants" class="form-control" min="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="emails">Email (optional): </label>
+                        <input type="text" id="email" name="email" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group my-3">
+                    <button type="submit" class="btn btn-primary rounded-0 d-flex justify-content-center text-center p-3">
+                        Search Flights
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+</body>

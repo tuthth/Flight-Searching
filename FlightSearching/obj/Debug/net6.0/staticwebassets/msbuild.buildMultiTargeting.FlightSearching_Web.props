@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\FlightSearching_Web.props" />
+</Project>
